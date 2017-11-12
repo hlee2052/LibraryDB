@@ -2,8 +2,8 @@
 <html>
 
   <head>
-    <title> Library Database </title>
-    <link rel="stylesheet" type="text/css" href="style.php"/>
+  <title> Library Database </title>
+  <link rel="stylesheet" type="text/css" href="style.php"/>
   </head>
   <body>
 
@@ -52,9 +52,11 @@
       <!--input 2-->
         <input type="text" name="newName" size="16">
         <input type="submit" value="update" name="updatesubmit"></p>
+    </form>
+    </body>
+</html>
 
     <?php
-
     $success = True;
     //need to pass variables here
     //$db_connection = OCILogon("ora_username", "password", "dbhost.ugrad.cs.ubc.ca:1522/ug");
@@ -75,7 +77,7 @@
       $exec = OCIExecute($statement, OCI_DEFAULT);
       if (!$r){
         echo "<br>Cannot execute the following command: " . $commandString . "<br>";
-        $error = oci_error($statement);
+        $error = OCI_Error($statement);
         echo htmlentities($error['message']);
         $success = false;
       } else {
@@ -85,39 +87,45 @@
 
     }
 
-    function executeBountSQL($commandString, $list){
+function executeBountSQL($commandString, $list){
+  global $db_connection, $success;
+  $statement = OCIParse($db_connection, $commandString);
+  // parse SQL command
+  if (!$statement){
+    echo "<br> Cannor parse the following command: " . $commandString. "<br>";
+    $error = OCI_Error($db_connection);
+    echo htmlentities($error['message']);
+    $success = False;
+  }
 
-      global $db_connection, $success;
-      $statement = OCIParse($db_connection, $commandString);
-
-      if (!$statement){
-        echo "<br> Cannor parse the following command: " . $commandString. "<br>";
-        $error = OCI_Error($db_connection);
-        echo htmlentities($error['message']);
-        $success = False;
+  foreach ($list as $tuple) {
+    foreach ($tuple as $bind => $val){
+      OCIBindByName($statement, $bind, $val);
+      unset($val);
       }
 
-      foreach ($list as $tuple) {
-        foreach ($tuple as $bind => $val){
-          OCIBindByName($statement, $bind, $val);
-          unset($val);
-        }
-        $r = OCIExecute($statement, OCI_default);
-        if (!$r) {
-          echo "<br> Cannot execut the following command: " .commandString. "<br>";
-          $error = OCI_Error($statement);
-          echo htmlentities ($error['message']);
-          echo "<br>";
-          $success = False;
-        }
-      }
+  $r = OCIExecute($statement, OCI_default);
+  //executes SQL command
+  if (!$r) {
+    echo "<br> Cannot execute the following command: " .commandString. "<br>";
+    $error = OCI_Error($statement);
+    echo htmlentities ($error['message']);
+    echo "<br>";
+    $success = False;
+  }
+}
+}
+
+  function printResult($result){
+    echo "<br> Got data from Events table: <br>";
+    echo "<table>";
+    echo "<tr><th>ID</th><th>Name</th></tr>";
+
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
+      echo $row[0];
     }
-
+    echo "</table>";
+  }
 
 
 ?>
-
-
-    </form>
-  </body>
-  </html>
