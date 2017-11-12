@@ -18,6 +18,7 @@
     </div>
 
 <!-- this will later be our drop table SQL command-->
+<!--testing git   -->
     <p> Reset Table </p>
     <form method="POST" action="libdatabase.php">
     <p><input type="submit" value="reset" name="reset"></p>
