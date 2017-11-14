@@ -117,6 +117,13 @@ insert into Location(lid, locname, locaddress, locphone) Value (1, 'Vancouver Br
 Insert into Location(lid, locname, locaddress, locphone) value (2, 'Burnaby Branch', '1450 Burb Ave', 604444344);
 Insert into Location(lid, locname, locaddress, locphone) value (3, 'Richmond Branch', '4444 Richer Ave', 60333122);
 
+insert into Room(roomNumber, lid) Value (100, 1);
+insert into Room(roomNumber, lid) Value (101, 1);
+insert into Room(roomNumber, lid) Value (102, 1);
+insert into Room(roomNumber, lid) Value (101, 2);
+insert into Room(roomNumber, lid) Value (102, 2);
+insert into Room(roomNumber, lid) Value (100, 3);
+
 
 insert into eventLog(logid, eid, lid) value (100, 100, 1);
 insert into eventLog(logid, eid, lid) value (101, 101, 1);
@@ -140,7 +147,7 @@ Insert into Member (mid, fines, email, phone, name, address) value (107, 33, 'cu
 Insert Into Staff (mid, role) Value (101, 'Security');
 Insert Into Staff (mid, role) Value (102, 'Librarian');
 Insert into Staff (mid, role) Value (103, 'Custodian');
-
+Insert Into Staff (mid, role) Value (104, 'Librarian');
 
 
 
