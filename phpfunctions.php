@@ -1,5 +1,6 @@
 
 <?php
+
 //this tells the system that it's no longer just parsing
 //html; it's now parsing PHP
 
@@ -20,7 +21,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 		$success = False;
 	}
 
-	$r = OCIExecute($statement, OCI_DEFAULT);
+	$r = OCIExecute($statement, OCI_NO_AUTO_COMMIT);
 	if (!$r) {
 		echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
 		$e = oci_error($statement); // For OCIExecute errors pass the statementhandle
