@@ -91,7 +91,6 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 
 	}
 	return $statement;
-
 }
 
 function printResult($result) { //prints results from a select statement
@@ -106,7 +105,6 @@ function printResult($result) { //prints results from a select statement
 	echo "</table>";
 
 }
-
 
 function executeBoundSQL($cmdstr, $list) {
 	/* Sometimes the same statement will be executed for several times ... only
@@ -146,12 +144,9 @@ function executeBoundSQL($cmdstr, $list) {
 
 }
 
-
-
-
-
-
-
+/*
+Start of the code
+*/
 
 $db_conn = OCILogon("ora_i4i8", "a68033083", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 if (!$db_conn) {
@@ -250,7 +245,6 @@ if ($db_conn){
 	   
 		}
 		
-
 	if (array_key_exists('updateMedia', $_POST)) {
 		
 		$variable1 = $_POST['mediaID'];
@@ -289,13 +283,9 @@ if ($db_conn){
 		}
 
 
-
-
-
-
 if ($_POST && $success) {
 		//POST-REDIRECT-GET -- See http://en.wikipedia.org/wiki/Post/Redirect/Get
-		header("location: testingPHP.php");
+		header("location: member.php");
 	} else {
 		// Select data...
 		

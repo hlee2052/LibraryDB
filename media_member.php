@@ -48,7 +48,7 @@
 	  	  <p><font size="4">Check number of events each Location has: </font>
 	 
 	  <form method="POST" action="media_member.php">
-      <p><input type="submit" value="Show Events" name="showEvent"></p>
+      <p><input type="submit" value="Show Number of Events by Location" name="showEventNum"></p>
       </form>
 	  
 	  
@@ -224,6 +224,40 @@ if ($db_conn){
 		}
 		echo "</table>";
 	}
+		
+		
+		
+	if (array_key_exists('showEventNum', $_POST)) {
+		
+		$SQLquery = "SELECT * FROM Location";
+
+
+		$result = executePlainSQL($SQLquery);
+		
+		OCICommit($db_conn);
+		echo "<br><font size='4pt'>> Number of Events by Locations<font><br>";		
+	
+		echo "<table>";
+		echo "<tr><th>Location Name</th><th>Number</th></tr>";
+
+		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			echo "<tr><td>" . $row["LOCNAME"] . "</td><td>" .  $row["COUNT()"] . "</td></tr>";
+		}
+		echo "</table>";
+	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	   $r = oci_commit($db_conn);
