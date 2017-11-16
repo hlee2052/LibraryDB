@@ -23,91 +23,260 @@
 
 <!--a div class set up for the database heading-->
     <div>
-      <h1> media page </h1>
+      <h1> Media/Event page </h1>
 
-      <form>
-        <input type="text" name="search" placeholder="search title"/>
-        <input type="submit" value="Search"></input>
+
+	   <p><font size="4">Search book with keyword:</font>
+	   <p><font size="3">only first name shown, no sensitive info(id) shown)</font></p>
+	 
+	  <p><font size="3"> input keyword</font></p>
+	  <form method="POST" action="media_member.php">
+      <p><input type="text" name="bookString" size="6">
+      <input type="submit" value="Search Book" name="searchBook"></p>
       </form>
+	  
+	  
+	  
+	  <p><font size="4">View Events By Time: </font>
+	 
+	  <form method="POST" action="media_member.php">
+      <p><input type="submit" value="Show Events" name="showEvent"></p>
+      </form>
+	  
+	  
+	  
+	  	  <p><font size="4">Check number of events each Location has: </font>
+	 
+	  <form method="POST" action="media_member.php">
+      <p><input type="submit" value="Show Events" name="showEvent"></p>
+      </form>
+	  
+	  
 
-      <table>
-        <h2>Books:</h2>
-        <tr>
-          <th>mediaid</th>
-          <th>booktitle</th>
-          <th>reserved</th>
-          <th>avaliability</th>
-          <th>location</th>
-        </tr>
-        <tr>
-          <td>1234</td>
-          <td>a book</td>
-          <td>no</td>
-          <td>yes</td>
-          <td>richmond</td>
-          <td> <button>borrow</button> press to update media</td>
-        </tr>
-        <tr>
-          <td>4321</td>
-          <td>another book</td>
-          <td>no</td>
-          <td>no</td>
-          <td>vancouver</td>
-        </tr>
-      </table>
-
-      <table>
-        <h2>DVD:</h2>
-        <tr>
-          <th>mediaid</th>
-          <th>dvdtitle</th>
-          <th>reserved</th>
-          <th>avaliability</th>
-          <th>location</th>
-        </tr>
-        <tr>
-          <td>2345</td>
-          <td>a movie</td>
-          <td>no</td>
-          <td>yes</td>
-          <td>langley</td>
-          <td> <button>borrow</button></td>
-        </tr>
-        <tr>
-          <td>5432</td>
-          <td>another movie</td>
-          <td>no</td>
-          <td>yes</td>
-          <td>north van</td>
-          <td> <button>borrow</button></td>
-        </tr>
-      </table>
-
-      <table>
-        <h2>equipment:</h2>
-        <tr>
-          <th>mediaid</th>
-          <th>booktitle</th>
-          <th>reserved</th>
-          <th>avaliability</th>
-          <th>location</th>
-        </tr>
-        <tr>
-          <td>3456</td>
-          <td>a computer</td>
-          <td>yes</td>
-          <td>no</td>
-          <td>burnaby</td>
-        </tr>
-        <tr>
-          <td>6543</td>
-          <td>a printer</td>
-          <td>yes</td>
-          <td>no</td>
-          <td>surrey</td>
-        </tr>
-      </table>
-
+   
     </div>
   </body>
 </html>
+
+<?php
+function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
+	//echo "<br>running ".$cmdstr."<br>";
+	global $db_conn, $success;
+	$statement = OCIParse($db_conn, $cmdstr); //There is a set of comments at the end of the file that describe some of the OCI specific functions and how they work
+
+	if (!$statement) {
+		echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+		$e = OCI_Error($db_conn); // For OCIParse errors pass the       
+		// connection handle
+		echo htmlentities($e['message']);
+		$success = False;
+	}
+
+	$r = OCIExecute($statement, OCI_DEFAULT);
+	if (!$r) {
+		echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+		$e = oci_error($statement); // For OCIExecute errors pass the statementhandle
+		echo htmlentities($e['message']);
+		$success = False;
+	} else {
+
+	}
+	return $statement;
+}
+
+function printResult($result) { //prints results from a select statement
+	echo "<br>Got data from table tab1:<br>";
+	echo "<table>";
+	echo "<tr><th>ID</th><th>Name</th><th>Addresss</th></tr>";
+
+	while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+		echo "<tr><td>" . $row["NID"] . "</td><td>" . $row["NAME"] ."</td><td>" . $row["ADDRESS"]   .     "</td></tr>"; //or just use "echo $row[0]" 
+
+	}
+	echo "</table>";
+
+}
+
+function executeBoundSQL($cmdstr, $list) {
+	/* Sometimes the same statement will be executed for several times ... only
+	 the value of variables need to be changed.
+	 In this case, you don't need to create the statement several times; 
+	 using bind variables can make the statement be shared and just parsed once.
+	 This is also very useful in protecting against SQL injection.  
+      See the sample code below for how this functions is used */
+
+	global $db_conn, $success;
+	$statement = OCIParse($db_conn, $cmdstr);
+
+	if (!$statement) {
+		echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+		$e = OCI_Error($db_conn);
+		echo htmlentities($e['message']);
+		$success = False;
+	}
+
+	foreach ($list as $tuple) {
+		foreach ($tuple as $bind => $val) {
+			//echo $val;
+			//echo "<br>".$bind."<br>";
+			OCIBindByName($statement, $bind, $val);
+			unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
+
+		}
+		$r = OCIExecute($statement, OCI_DEFAULT);
+		if (!$r) {
+			echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+			$e = OCI_Error($statement); // For OCIExecute errors pass the statement handle
+			echo htmlentities($e['message']);
+			echo "<br>";
+			$success = False;
+		}
+	}
+
+}
+
+/*
+Start of the code
+*/
+
+$db_conn = OCILogon("ora_i4i8", "a68033083", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+if (!$db_conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+// Prepare the statement
+$stid ;
+
+$stid = oci_parse($db_conn, 'SELECT * FROM Staff');
+if (!$stid) {
+    $e = oci_error($conn);
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+// Perform the logic of the query
+$r = oci_execute($stid);
+if (!$r) {
+    $e = oci_error($stid);
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}
+
+
+if ($db_conn){
+	
+	
+	if (array_key_exists('searchBook', $_POST)) {
+		
+		$variable1 = 0;
+		$variable1 = strtoupper($_POST['bookString']);
+		
+		$stringMatch = '%'.$variable1.'%';
+		
+		
+		$tuple = array (
+				":bind1" => $stringMatch,
+			);
+			$alltuples = array (
+				$tuple
+			);
+		
+		$SQLquery = "SELECT MB.name, O.mediaid, B.bookTitle
+			FROM Orders O, Book B, Media M, Member MB
+			WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid
+			AND 
+			MB.mid = O.mid
+			AND UPPER(B.bookTitle) LIKE '${stringMatch}'";
+
+		
+		//$stid = oci_parse($conn, $SQLquery);
+		//$r = oci_execute($stid); 
+			
+		$result = executePlainSQL($SQLquery);
+		OCICommit($db_conn);
+			echo "<br>See who has checked out the books containing the keyword<br>";		
+	
+		echo "<table>";
+		echo "<tr><th>Name</th><th>MediaID</th><th>book title</th></tr>";
+
+		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			echo "<tr><td>" . $row["NAME"] . "</td><td>" .  $row["MEDIAID"] ."</td><td>"  .$row["BOOKTITLE"]."</td></tr>";
+		}
+		echo "</table>";
+		}
+		
+	if (array_key_exists('showEvent', $_POST)) {
+		
+		$SQLquery = "SELECT * FROM Event Order By startTime DESC";
+
+
+		$result = executePlainSQL($SQLquery);
+		
+		OCICommit($db_conn);
+		echo "<br><font size='4pt'>> Event sorted by the latest start time<font><br>";		
+	
+		echo "<table>";
+		echo "<tr><th>event ID</th><th>startTime</th><th>endTime</th><th>eventName</th></tr>";
+
+		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			echo "<tr><td>" . $row["EID"] . "</td><td>" .  $row["STARTTIME"] ."</td><td>"  .$row["ENDTIME"]."</td><td>"
+			.$row["ENAME"].
+			"</td></tr>";
+		}
+		echo "</table>";
+	}
+		
+		
+	   $r = oci_commit($db_conn);
+		if (!$r) {
+		$e = oci_error($db_conn);
+		trigger_error(htmlentities($e['message']), E_USER_ERROR);
+			}
+			
+	   if ($_POST && $success) {
+		//POST-REDIRECT-GET -- See http://en.wikipedia.org/wiki/Post/Redirect/Get
+		header("location: testingPHP.php");
+	} else {
+		// Select data...
+	//Commit to save changes...
+	OCILogoff($db_conn);
+		}
+
+		}
+
+
+
+
+
+
+// Fetch the results of the query
+
+//oci_free_statement($stid);
+//oci_close($db_conn);
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
