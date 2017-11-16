@@ -35,8 +35,9 @@
         <form method ="POST" action="event.php">
           <input type="text" name="eventID" placeholder="event ID"></input>
           <input type="text" name="eventName" placeholder="event name"></input>
-          <input type="text" name="startTime" placeholder="start_time"></input>
-          <input type="text" name="endTime" placeholder="end_time"></input>
+          <input type="text" name="datevar" placeholder="date of event"></input>
+          <input type="text" name="startTime" placeholder="start time of event"></input>
+          <input type="text" name="endTime" placeholder="end time of event"></input>
           <input type="submit" value="insert" name="insertsubmit"></input>
         </form>
   </body>
@@ -60,7 +61,7 @@ function executePlainSQL($commandString){
 
   $exec = OCIExecute($statement, OCI_DEFAULT);
   if (!$exec){
-    echo "<br>Cannot execute the following command: " . $commandString . "<br>";
+    echo "<br>Cannot execute the following command for EPSQL: " . $commandString . "<br>";
     $error = OCI_Error($statement);
     echo htmlentities($error['message']);
     $success = false;
@@ -86,10 +87,10 @@ function executeBoundSQL($commandString, $list){
       OCIBindByName($statement, $bind, $val);
       unset($val);
     }
-    $exec = OCIExecute($statement, OCI_default);
+    $exec = OCIExecute($statement, OCI_NO_AUTO_COMMIT);
     //executes SQL command
     if (!$exec) {
-      echo "<br>Cannot execute the following command: " . $commandString . "<br>";
+      echo "<br>Cannot execute the following command for EBSQL: " . $commandString . "<br>";
       $error = OCI_Error($statement);
       echo htmlentities ($error['message']);
       echo "<br>";
@@ -103,14 +104,16 @@ function printResult($result){
 	echo "<table style='border:2px solid black'>";
 	echo "<tr>
   <th style='border:1px solid black'>Name</th>
-  <th style='border:1px solid black'>start time</th>
-  <th style='border:1px solid black'>end time</th
+  <th style='border:1px solid black'>Date</th>
+  <th style='border:1px solid black'>Start Time</th>
+  <th style='border:1px solid black'>End Time</th>
   </tr>";
 
   while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
-    echo "<tr><td style='border:1px solid red'>" . $row["name"] . "</td>
-    <td style='border:1px solid red'>" . $row["startTime"] . "</td>
-    <td style='border:1px solid red'>" . $row["endTime"] . "</td>
+    echo "<tr><td style='border:1px solid red'>" . $row["NAME"] . "</td>
+    <td style='border:1px solid red'>" . $row["DATEVAR"] . "</td>
+    <td style='border:1px solid red'>" . $row["STARTTIME"] . "</td>
+    <td style='border:1px solid red'>" . $row["ENDTIME"] . "</td>
     </tr>";
   }
   echo "</table>";
@@ -120,12 +123,12 @@ if ($db_connection){
 
   if (array_key_exists ('reset', $_POST)){
     echo "<br> dropping table <br>";
-    executePlainSQL("Drop table event");
+    executePlainSQL("drop table event");
 
     //creating new event table
     echo "<br> creating new event table <br>";
-    executePlainSQL("create table event (eid number, name varchar2(30), startTime number,
-    endTime number, primary key (eid))");
+    executePlainSQL("create table event (eid number, name varchar2(30), datevar DATE,
+    startTime number, endTime number, primary key (eid))");
     OCICommit($db_connection);
 
   } else
@@ -133,23 +136,24 @@ if ($db_connection){
       $tuple = array (
         ":bind1" => $_POST['eventID'],
         ":bind2" => $_POST['eventName'],
-        ":bind3" => $_POST['startTime'],
-        ":bind4" => $_POST['endTime']
+        ":bind3" => $_POST['datevar'],
+        ":bind4" => $_POST['startTime'],
+        ":bind5" => $_POST['endTime']
       );
       $alltuples = array (
         $tuple
       );
-      executeBoundSQL("insert into event values (:bind1, :bind2, :bind3, :bind4)", $alltuples);
+      executePlainSQL("alter session set NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS'");
+      executeBoundSQL("insert into event values (:bind1, :bind2, TO_DATE(:bind3, 'YYYY-MM-DD HH24:MI:SS'), :bind4, :bind5)", $alltuples);
       OCICommit($db_connection);
     }
-
-    if ($_POST && $success) {
-      header ("location: event.php");
-    } else {
-      $result = executePlainSQL("select name, startTime, endTime from event");
-      printResult($result);
-    }
-    OCILogoff($db_connection);
+  if ($_POST && $success) {
+    header ("location: event.php");
+  } else {
+    $result = executePlainSQL("select * from event");
+    printResult($result);
+  }
+  OCILogoff($db_connection);
 } else {
   echo "cannot connect";
 	$error = OCI_Error(); // For OCILogon errors pass no handle
