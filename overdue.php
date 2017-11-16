@@ -53,15 +53,20 @@
     // Connect Oracle...
     if ($db_conn) {
       //GET BOOKS
-      $booklist = executePlainSQL("select * from tab1");
+      $booklist = executePlainSQL("SELECT MB.name as MID, O.mediaid as MEDIAID, B.bookTitle as NAME, B.borrowDate as BORROWDATE
+        FROM Orders O, Book B, Media M, Member MB
+        WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid
+        AND
+        Mb.mid = O.mid
+        AND M.returnDate > ‘YYYY-MM-DD’"); //TODO: select mediaid, bookTitle, mid, borrowDate, Reserved,
+      //DAYSOVERDUE = today - returnDate. get all that have a DAYSOVERDUE more than 0
     	printResult("Book", $booklist);
       //GET DVDS
-      $dvdlist = executePlainSQL("select * from tab1");
+      $dvdlist = executePlainSQL("select * from DVD");
     	printResult("DVD", $dvdlist);
       //GET EQUIPMENT
-      $equiplist = executePlainSQL("select * from tab1");
+      $equiplist = executePlainSQL("select * from Equipment");
     	printResult("Equipment", $equiplist);
-
     	//Commit to save changes...
     	OCILogoff($db_conn);
     } else {
