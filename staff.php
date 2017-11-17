@@ -183,7 +183,7 @@ if ($db_conn){
 		OCICommit($db_conn);
 		echo "<br>List of Staff members wth fines to pay<br>";		
 	
-		echo "<table  style='border:2px solid black>";
+		echo "<table style='border:2px solid black>";
 		echo "<tr><th style='border:1px solid black'>Name</th>
 			<th style='border:1px solid black'>member ID</th>
 			<th style='border:1px solid black'>Role</th>
@@ -258,7 +258,7 @@ if ($db_conn){
 		
 				echo "<tr><th style='border:1px solid black'>Name</th>
 		<th style='border:1px solid black'>member ID</th>
-		<th style='border:1px solid black'>Name</th>
+		
 		</tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
