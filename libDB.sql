@@ -214,6 +214,6 @@ Insert Into Orders (orderId, mid, mediaid) values (100, 101, 101);
 Insert Into Orders (orderId, mid, mediaid) values (101, 101, 107);
 Insert Into Orders (orderId, mid, mediaid) values (102, 105, 108);
 
-
+commit;
 
 
