@@ -222,10 +222,15 @@ if ($db_conn){
 		
 		
 		
-		$SQLquery = "SELECT COUNT(empId), E.mid
+		$SQLquery =	
+					"SELECT mid, name
+					FROM Member
+					where MID  in (
+					SELECT E.mid
 					 FROM StaffEmployment E
-					 GROUP BY E.mid"
-					 ;
+					 GROUP BY E.mid
+					 HAVING COUNT(empId)>1)";
+					 
 
 
 		
@@ -237,10 +242,10 @@ if ($db_conn){
 		echo "<br>Employer that works at multiple loc<br>";		
 	
 		echo "<table>";
-		echo "<tr><th>Name</th><th>member ID</th><th>Role</th></tr>";
+		echo "<tr><th>member ID</th><th>Name</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-			echo "<tr><td>" . $row["EMPID"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]. "</td></tr>";
+			echo "<tr><td>".$row["MID"]."</td><td>".$row["NAME"]. "</td></tr>";
 		}
 		echo "</table>";
 		}	
