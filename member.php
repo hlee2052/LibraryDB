@@ -25,22 +25,17 @@
     <div>
       <h1> Member Home Page (D4) </h1>
 	  
-	  <p> Type member ID: </p>
-	  <p><font size="2"> user id</font></p>
-      
+	  <p> Type Member ID to see the borrowed media: </p>
 	  <form method="POST" action="member.php">
-
        <p><input type="text" name="userID" size="6">
           <input type="submit" value="Search User" name="updateUser"></p>
       </form>
-	  
+	  <br />
+	  <br />
 	  <!-----user returns book----->
 	  
 	  <p> Type mediaID to be returned: </p>
-	  <p><font size="2"> mediaID</font></p>
-      
 	  <form method="POST" action="member.php">
-
        <p><input type="text" name="mediaID" size="6">
           <input type="submit" value="Return media" name="updateMedia"></p>
       </form>
@@ -196,8 +191,13 @@ if ($db_conn){
 		OCICommit($db_conn);
 			echo "<br>The Current User<br>";
 	
-		echo "<table>";
-		echo "<tr><th>memberID</th><th>Fine</th><th>Email</th><th>phone</th><th>Name</th><th>address</th></tr>";
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>memberID</th>
+		<th style='border:1px solid black'>Fine</th>
+		<th style='border:1px solid black'>Email</th>
+		<th style='border:1px solid black'>phone</th>
+		<th style='border:1px solid black'>Name</th>
+		<th style='border:1px solid black'>address</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 			echo "<tr><td>" . $row["MID"] . "</td><td>" .  $row["FINES"] ."</td><td>"  .$row["EMAIL"]. "</td><td>" .$row["PHONE"]."</td><td>"
@@ -207,18 +207,18 @@ if ($db_conn){
 		echo "</table>";
 		
 		
-		print "--------";
-		print "<br> </br>";
-		print "--------";
-		print "<br>Currently borrowed media List: </br>";
+		
+		print "</br>";
+		
+		print "<br>Currently borrowed media List by memberID: ${variable1} </br>";
 		
 		
 		$mediaQuery = "SELECT mediaid FROM Orders WHERE mid='${variable1}'";
 		
 		$resultMedia = executePlainSQL($mediaQuery);
 		OCICommit($db_conn);
-		echo "<table>";
-		echo "<tr><th>mediaID</th></tr>";
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>mediaID</th></tr>";
 
 		while ($row = OCI_Fetch_Array($resultMedia, OCI_BOTH)) {
 			echo "<tr><td>" . $row["MEDIAID"] .  "</td></tr>"; //or just use "echo $row[0]" 
@@ -269,7 +269,7 @@ if ($db_conn){
 		trigger_error(htmlentities($e['message']), E_USER_ERROR);
 			}
 			
-		executeBoundSQL("UPDATE media Set reserved='False', availability='true'
+		executeBoundSQL("UPDATE media Set reserved='False', availability='yes'
 		WHERE mediaid=:bind1", $alltuples);
 			
 			
@@ -288,6 +288,27 @@ if ($_POST && $success) {
 		header("location: member.php");
 	} else {
 		// Select data...
+		
+		$allMembers = "SELECT mediaid, availability
+					FROM Media
+					WHERE availability='yes'";
+		
+		$memberList = executePlainSQL($allMembers);
+		echo "<br>List of available media<br>";		
+	
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>MediaId</th>
+		<th style='border:1px solid black'>Availability</th>
+		
+		<th style='border:1px solid black'>Fines</th></tr>";
+
+		while ($row = OCI_Fetch_Array($memberList, OCI_BOTH)) {
+			echo "<tr><td>" . $row["MEDIAID"] . "</td><td>".$row["AVAILABILITY"]. "</td></tr>";
+		}
+		echo "</table>";
+		
+		
+		
 		
 	}
 
