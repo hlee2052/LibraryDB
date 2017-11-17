@@ -177,8 +177,11 @@ if ($db_conn){
 		OCICommit($db_conn);
 		echo "<br>List of Staff members wth fines to pay<br>";		
 	
-		echo "<table>";
-		echo "<tr><th>Name</th><th>member ID</th><th>Role</th><th>Fines</th></tr>";
+		echo "<table  style='border:2px solid black>";
+		echo "<tr><th style='border:1px solid black'>Name</th>
+			<th style='border:1px solid black'>member ID</th>
+			<th style='border:1px solid black'>Role</th>
+			<th style='border:1px solid black'>Fines</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]."</td><td>".$row["FINES"]. "</td></tr>";
@@ -241,8 +244,12 @@ if ($db_conn){
 		OCICommit($db_conn);
 		echo "<br>Employer that works at multiple loc<br>";		
 	
-		echo "<table>";
-		echo "<tr><th>member ID</th><th>Name</th></tr>";
+		echo "<table style='border:2px solid black'>";
+		
+				echo "<tr><th style='border:1px solid black'>Name</th>
+		<th style='border:1px solid black'>member ID</th>
+		<th style='border:1px solid black'>Name</th>
+		</tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 			echo "<tr><td>".$row["MID"]."</td><td>".$row["NAME"]. "</td></tr>";
@@ -268,6 +275,30 @@ if ($db_conn){
 	} else {
 		// Select data...
 		
+		/*
+			echo "<table style='border:2px solid black'>";
+			echo "<tr>
+		<th style='border:1px solid black'>Event ID</th>
+		<th style='border:1px solid black'>Start Time</th>
+		<th style='border:1px solid black'>End Time</th>
+		<th style='border:1px solid black'>Name</th>
+		</tr>";
+
+  while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
+    echo "<tr><td style='border:1px solid red'>" . $row["EID"] . "</td>
+    <td style='border:1px solid red'>" . $row["STARTTIME"] . "</td>
+    <td style='border:1px solid red'>" . $row["ENDTIME"] . "</td>
+    <td style='border:1px solid red'>" . $row["ENAME"] . "</td>
+    </tr>";
+  }
+  echo "</table>";
+		
+		
+		*/
+		
+		
+		
+		
 		
 		$allMembers = "SELECT M.name, S.mid, S.role,  M.fines
 					FROM Staff S, Member M
@@ -278,8 +309,11 @@ if ($db_conn){
 		$memberList = executePlainSQL($allMembers);
 		echo "<br>List of Current Staff Members<br>";		
 	
-		echo "<table>";
-		echo "<tr><th>Name</th><th>member ID</th><th>Role</th><th>Fines</th></tr>";
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>Name</th>
+		<th style='border:1px solid black'>member ID</th>
+		<th style='border:1px solid black'>Role</th>
+		<th style='border:1px solid black'>Fines</th></tr>";
 
 		while ($row = OCI_Fetch_Array($memberList, OCI_BOTH)) {
 			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]."</td><td>".$row["FINES"]. "</td></tr>";
