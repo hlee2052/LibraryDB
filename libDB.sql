@@ -182,6 +182,17 @@ Insert into Staff (mid, role) values (103, 'Custodian');
 Insert Into Staff (mid, role) values (104, 'Librarian');
 
 
+Insert Into StaffEmployment (1, 101, 1);
+Insert Into StaffEmployment (1, 101, 2);
+Insert Into StaffEmployment (1, 101, 3);
+
+Insert Into StaffEmployment (1, 102, 2);
+Insert Into StaffEmployment (1, 103, 1);
+Insert Into StaffEmployment (1, 104, 3);
+
+
+
+
 
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (101, '2008-11-19' , '2017-10-14', 'no', '2018-01-01', 'no');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (102, '2011-02-19' , '2011-01-14', 'no', '1990-11-24', 'yes');

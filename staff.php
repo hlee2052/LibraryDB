@@ -26,17 +26,26 @@
       <h1> Staff </h1>
 
      
-	  <p><font size="4">Cheeck staffs with fines to pay: </font>
+	  <p><font size="4">Check staffs with fines to pay: </font> </p>
 	  <form method="POST" action="staff.php">
       <p><input type="submit" value="show staff with fines to pay" name="staffFines"></p>
       </form>
 	  
 	  
-	  <p><font size="4">Fire Staff with given ID:</font>
+	  <p><font size="4">Fire Staff with given ID:</font> </p>
 	  <form method="POST" action="staff.php">
       <p><input type="text" name="staffID" size="6">
       <input type="submit" value="Fire staff given ID" name="fireStaff"></p>
       </form>
+	  
+	  
+	  <p><font size="4">Show staff who works at more than 1 location: </font> </p>
+	  <form method="POST" action="staff.php">
+      <p><input type="submit" value="show staff who works at multiple locations" name="staffLocation"></p>
+      </form>
+	  
+	  
+	  
 	  
     </div>
   </body>
@@ -177,7 +186,6 @@ if ($db_conn){
 		echo "</table>";
 		}
 		
-    
 	if (array_key_exists('fireStaff', $_POST)) {
 		
 	
@@ -209,6 +217,36 @@ if ($db_conn){
 		
 		
 		}
+		
+	if (array_key_exists('staffLocation', $_POST)) {
+		
+		
+		
+		$SQLquery = "SELECT M.name, COUNT(E.mid)
+					 FROM StaffEmployment E, Member M
+					 WHERE E.mid = M.mid
+					 GROUP BY E.mid
+					 HAVING COUNT(*) > 1";
+
+
+		
+		//$stid = oci_parse($conn, $SQLquery);
+		//$r = oci_execute($stid); 
+			
+		$result = executePlainSQL($SQLquery);
+		OCICommit($db_conn);
+		echo "<br>List of Staff members wth fines to pay<br>";		
+	
+		echo "<table>";
+		echo "<tr><th>Name</th><th>member ID</th><th>Role</th></tr>";
+
+		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]. "</td></tr>";
+		}
+		echo "</table>";
+		}	
+	
+		
 		
 		
 		
