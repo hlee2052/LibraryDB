@@ -258,7 +258,7 @@ if ($db_conn){
 		
 				echo "<tr><th style='border:1px solid black'>Name</th>
 		<th style='border:1px solid black'>member ID</th>
-		<th style='border:1px solid black'>Name</th>
+		
 		</tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
