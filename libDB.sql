@@ -182,13 +182,13 @@ Insert into Staff (mid, role) values (103, 'Custodian');
 Insert Into Staff (mid, role) values (104, 'Librarian');
 
 
-Insert Into StaffEmployment (1, 101, 1);
-Insert Into StaffEmployment (1, 101, 2);
-Insert Into StaffEmployment (1, 101, 3);
+Insert Into StaffEmployment values(1, 101, 1);
+Insert Into StaffEmployment values(2, 101, 2);
+Insert Into StaffEmployment values(3, 101, 3);
 
-Insert Into StaffEmployment (1, 102, 2);
-Insert Into StaffEmployment (1, 103, 1);
-Insert Into StaffEmployment (1, 104, 3);
+Insert Into StaffEmployment values (4, 102, 2);
+Insert Into StaffEmployment values(5, 103, 1);
+Insert Into StaffEmployment values(6, 104, 3);
 
 
 

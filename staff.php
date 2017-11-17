@@ -222,11 +222,10 @@ if ($db_conn){
 		
 		
 		
-		$SQLquery = "SELECT M.name, COUNT(E.mid)
-					 FROM StaffEmployment E, Member M
-					 WHERE E.mid = M.mid
-					 GROUP BY E.mid
-					 HAVING COUNT(*) > 1";
+		$SQLquery = "SELECT COUNT(empId), E.mid
+					 FROM StaffEmployment E
+					 GROUP BY E.mid"
+					 ;
 
 
 		
@@ -235,13 +234,13 @@ if ($db_conn){
 			
 		$result = executePlainSQL($SQLquery);
 		OCICommit($db_conn);
-		echo "<br>List of Staff members wth fines to pay<br>";		
+		echo "<br>Employer that works at multiple loc<br>";		
 	
 		echo "<table>";
 		echo "<tr><th>Name</th><th>member ID</th><th>Role</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]. "</td></tr>";
+			echo "<tr><td>" . $row["EMPID"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]. "</td></tr>";
 		}
 		echo "</table>";
 		}	
