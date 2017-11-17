@@ -26,7 +26,7 @@
       <h1> Media - Book page </h1>
 
 
-	   <p><font size="4">Search book with keyword:</font>
+	   <p><font size="4">Search book with keyword(partial keyword ok, case insensitive):</font>
 	   <br><font size="3">only first name shown, no sensitive info(id) shown</font></br>
 	   </p>
 	  <form method="POST" action="media_member.php">
@@ -37,7 +37,7 @@
 	  
 	  
 	  
-	    <p> Search how many books are there given exact title: </p>
+	    <p> Search how many books are there given exact title: (case insensitive) </p>
 	  <form method="POST" action="media_member.php">
        <p><input type="text" name="numBookString" size="6">
           <input type="submit" value="search number of books" name="numBook"></p>
@@ -169,8 +169,8 @@ if ($db_conn){
 		
 		$stringMatch = '%'.$variable1.'%';
 		
-		
-		$tuple = array (
+		if ($stringMatch!==''){
+			$tuple = array (
 				":bind1" => $stringMatch,
 			);
 			$alltuples = array (
@@ -199,6 +199,10 @@ if ($db_conn){
 			echo "<tr><td>" . $row["NAME"] . "</td><td>" .  $row["MEDIAID"] ."</td><td>"  .$row["BOOKTITLE"]."</td></tr>";
 		}
 		echo "</table>";
+		}
+		
+		
+		
 		}
 		
 		

@@ -202,8 +202,10 @@ Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availab
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (106, '2016-06-19' , '2016-05-14', 'no', '2004-11-24', 'yes');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (107, '2017-12-11' , '2017-10-14', 'yes', '2002-11-14', 'no');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (108, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
-
-
+Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (109, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
+Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (110, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
+Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (111, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
+Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (112, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
 
 
 
@@ -214,11 +216,15 @@ Insert Into DVD (mediaid, dISBN, dvdTitle) values(103, 124444 ,'planet earth dvd
 Insert Into DVD (mediaid, dISBN, dvdTitle) values(104, 514444 ,'rush hour3');
 
 Insert Into Book (mediaid, bISBN, bookTitle) values(105, 14444 ,'Fashion today');
-Insert Into Book (mediaid, bISBN, bookTitle) values(106, 34444 ,'Intro Computer');
-Insert Into Book (mediaid, bISBN, bookTitle) values(107, 231312, 'Building computer');
-Insert Into Book (mediaid, bISBN, bookTitle) values(108,233223, 'Harry Potter');
+Insert Into Book (mediaid, bISBN, bookTitle) values(106, 3444 ,'Intro Computer');
+Insert Into Book (mediaid, bISBN, bookTitle) values(107, 2312, 'Building computer');
+Insert Into Book (mediaid, bISBN, bookTitle) values(108,23223, 'Harry Potter');
+Insert Into Book (mediaid, bISBN, bookTitle) values(109,2332, 'Harry Potter');
+Insert Into Book (mediaid, bISBN, bookTitle) values(110,2723, 'Harry Potter');
+Insert Into DVD (mediaid, dISBN, dvdTitle) values(111,2333, 'tester');
 
 
+commit;
 
 
 Insert Into Orders (orderId, mid, mediaid) values (100, 101, 101);
