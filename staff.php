@@ -54,6 +54,12 @@
 
 
 <?php
+
+
+function alert($msg) {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
+}
+
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
 	//echo "<br>running ".$cmdstr."<br>";
 	global $db_conn, $success;
@@ -212,6 +218,10 @@ if ($db_conn){
 		executeBoundSQL($SQLquery, $alltuples);
 		
 		//commit after executeBoundSQL
+		
+		
+		$message = "The staff with id ${variable1} has been fired if exists in the database";
+		echo "<script type='text/javascript'>alert('$message');</script>";
 		$r = oci_commit($db_conn);
 		if (!$r) {
 		$e = oci_error($db_conn);
@@ -258,9 +268,6 @@ if ($db_conn){
 		}	
 	
 		
-		
-		
-		
 		////////////////////////
 		
 	   $r = oci_commit($db_conn);
@@ -272,39 +279,12 @@ if ($db_conn){
 	   if ($_POST && $success) {
 		//POST-REDIRECT-GET -- See http://en.wikipedia.org/wiki/Post/Redirect/Get
 		header("location: staff.php");
-	} else {
+		} else {
 		// Select data...
-		
-		/*
-			echo "<table style='border:2px solid black'>";
-			echo "<tr>
-		<th style='border:1px solid black'>Event ID</th>
-		<th style='border:1px solid black'>Start Time</th>
-		<th style='border:1px solid black'>End Time</th>
-		<th style='border:1px solid black'>Name</th>
-		</tr>";
-
-  while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
-    echo "<tr><td style='border:1px solid red'>" . $row["EID"] . "</td>
-    <td style='border:1px solid red'>" . $row["STARTTIME"] . "</td>
-    <td style='border:1px solid red'>" . $row["ENDTIME"] . "</td>
-    <td style='border:1px solid red'>" . $row["ENAME"] . "</td>
-    </tr>";
-  }
-  echo "</table>";
-		
-		
-		*/
-		
-		
-		
-		
 		
 		$allMembers = "SELECT M.name, S.mid, S.role,  M.fines
 					FROM Staff S, Member M
 					WHERE S.mid = M.mid";
-		
-		
 		
 		$memberList = executePlainSQL($allMembers);
 		echo "<br>List of Current Staff Members<br>";		
@@ -321,7 +301,6 @@ if ($db_conn){
 		echo "</table>";
 		
 		
-	
 	OCILogoff($db_conn);
 		}
 
