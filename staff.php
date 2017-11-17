@@ -181,9 +181,9 @@ if ($db_conn){
 			
 		$result = executePlainSQL($SQLquery);
 		OCICommit($db_conn);
-		echo "<br>List of Staff members wth fines to pay<br>";		
+		echo "<br>List of Staff members wth fines to pay</br>";		
 	
-		echo "<table style='border:2px solid black>";
+		echo "<table style='border:2px solid black'>";
 		echo "<tr><th style='border:1px solid black'>Name</th>
 			<th style='border:1px solid black'>member ID</th>
 			<th style='border:1px solid black'>Role</th>
@@ -193,6 +193,8 @@ if ($db_conn){
 			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]."</td><td>".$row["FINES"]. "</td></tr>";
 		}
 		echo "</table>";
+		echo "</table>";
+		
 		}
 		
 	if (array_key_exists('fireStaff', $_POST)) {

@@ -298,18 +298,6 @@ if ($db_conn){
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	   $r = oci_commit($db_conn);
 		if (!$r) {
 		$e = oci_error($db_conn);
