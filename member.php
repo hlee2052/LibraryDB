@@ -300,7 +300,7 @@ if ($_POST && $success) {
 		echo "<tr><th style='border:1px solid black'>MediaId</th>
 		<th style='border:1px solid black'>Availability</th>
 		
-		<th style='border:1px solid black'>Fines</th></tr>";
+		</tr>";
 
 		while ($row = OCI_Fetch_Array($memberList, OCI_BOTH)) {
 			echo "<tr><td>" . $row["MEDIAID"] . "</td><td>".$row["AVAILABILITY"]. "</td></tr>";

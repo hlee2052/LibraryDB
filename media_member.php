@@ -27,9 +27,8 @@
 
 
 	   <p><font size="4">Search book with keyword:</font>
-	   <p><font size="3">only first name shown, no sensitive info(id) shown)</font></p>
-	 
-	  <p><font size="3"> input keyword</font></p>
+	   <br><font size="3">only first name shown, no sensitive info(id) shown</font></br>
+	   </p>
 	  <form method="POST" action="media_member.php">
       <p><input type="text" name="bookString" size="6">
       <input type="submit" value="Search Book" name="searchBook"></p>
@@ -37,19 +36,7 @@
 	  
 	  
 	  
-	  <p><font size="4">View Events By Time: </font>
-	 
-	  <form method="POST" action="media_member.php">
-      <p><input type="submit" value="Show Events" name="showEvent"></p>
-      </form>
-	  
-	  
-	  
-	  	  <p><font size="4">Check number of events each Location has: </font>
-	 
-	  <form method="POST" action="media_member.php">
-      <p><input type="submit" value="Show Number of Events by Location" name="showEventNum"></p>
-      </form>
+	
 	  
 	  
 
@@ -195,8 +182,8 @@ if ($db_conn){
 		OCICommit($db_conn);
 			echo "<br>See who has checked out the books containing the keyword<br>";		
 	
-		echo "<table>";
-		echo "<tr><th>Name</th><th>MediaID</th><th>book title</th></tr>";
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>Name</th><th style='border:1px solid black'>MediaID</th><th style='border:1px solid black'>book title</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 			echo "<tr><td>" . $row["NAME"] . "</td><td>" .  $row["MEDIAID"] ."</td><td>"  .$row["BOOKTITLE"]."</td></tr>";
@@ -288,7 +275,6 @@ if ($db_conn){
 //oci_close($db_conn);
 
 ?>
-
 
 
 
