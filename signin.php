@@ -20,7 +20,7 @@
 
     <?php
     include "phpfunctions.php";
-    function printResult($type, $result) { //prints results from a select statement
+    function printResult($type, $result) {
       echo
       '<div class="' . $type . '">
         <h2> Sign in as ' . $type . ' </h2>
@@ -44,14 +44,11 @@
         FROM Staff S, Member M
         WHERE S.mid = M.mid";
       printResult("Staff", executePlainSQL($stafflist));
-      //Member
-      $memberlist = "SELECT M.name as NAME, M.mid as ID
-        FROM Member M
-        EXCEPT
-        SELECT M2.mid
-        FROM Staff S, Member M2
-        WHERE S.mid = M2.mid";
-      printResult("Member", executePlainSQL($memberlist));
+      $getNextID = "SELECT MAX(mid) as mid FROM Member";
+      $max = executePlainSQL($getNextID);
+      while ($temp = OCI_Fetch_Array($max, OCI_BOTH)) {
+        $newID = $temp["MID"] + 1;
+      }
     	if (array_key_exists('new', $_POST)) {
   				// Update tuple using data from user
   				$tuple = array (
@@ -63,10 +60,16 @@
   				$alltuples = array (
   					$tuple
   				);
-          $newID = executePlainSQL("SELECT MAX(mid) FROM Member";) + 1;
-  				executeBoundSQL("INSERT INTO Member VALUES(105, 0, :bind1, :bind2, :bind3, :bind4)", $alltuples);
+          $insertSQL = "INSERT INTO Member VALUES($newID, 0, :bind1, :bind2, :bind3, :bind4)";
+  				executeBoundSQL($insertSQL, $alltuples);
   				OCICommit($db_conn);
-  		}
+  		} if ($_POST && $success) {
+      		header("location: signin.php");
+      	} else {
+          //Member
+          $memberlist = "SELECT name as NAME, mid as ID FROM Member M";
+          printResult("Member", executePlainSQL($memberlist));
+      	}
     	//Commit to save changes...
     	OCILogoff($db_conn);
     } else {

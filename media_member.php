@@ -12,6 +12,7 @@
       <!--can't get this to work for some reason... < ?php require 'menu.php';?>-->
       <a href="member.php">Home</a>
       <a href="media_member.php">Search media</a>
+	   <a href="mediacatalog.php">MediaCatalog</a>
       <a href="signin.php">Sign out</a>
     </div>
 
@@ -23,13 +24,12 @@
 
 <!--a div class set up for the database heading-->
     <div>
-      <h1> Media/Event page </h1>
+      <h1> Media - Book page </h1>
 
 
-	   <p><font size="4">Search book with keyword:</font>
-	   <p><font size="3">only first name shown, no sensitive info(id) shown)</font></p>
-	 
-	  <p><font size="3"> input keyword</font></p>
+	   <p><font size="4">Search book with keyword(partial keyword ok, case insensitive):</font>
+	   <br><font size="3">only first name shown, no sensitive info(id) shown</font></br>
+	   </p>
 	  <form method="POST" action="media_member.php">
       <p><input type="text" name="bookString" size="6">
       <input type="submit" value="Search Book" name="searchBook"></p>
@@ -37,19 +37,17 @@
 	  
 	  
 	  
-	  <p><font size="4">View Events By Time: </font>
-	 
+	  
+	    <p> Search how many books are there given exact title: (case insensitive) </p>
 	  <form method="POST" action="media_member.php">
-      <p><input type="submit" value="Show Events" name="showEvent"></p>
+       <p><input type="text" name="numBookString" size="6">
+          <input type="submit" value="search number of books" name="numBook"></p>
       </form>
 	  
 	  
 	  
-	  	  <p><font size="4">Check number of events each Location has: </font>
-	 
-	  <form method="POST" action="media_member.php">
-      <p><input type="submit" value="Show Number of Events by Location" name="showEventNum"></p>
-      </form>
+	  
+	
 	  
 	  
 
@@ -172,8 +170,8 @@ if ($db_conn){
 		
 		$stringMatch = '%'.$variable1.'%';
 		
-		
-		$tuple = array (
+		if ($stringMatch!==''){
+			$tuple = array (
 				":bind1" => $stringMatch,
 			);
 			$alltuples = array (
@@ -195,14 +193,67 @@ if ($db_conn){
 		OCICommit($db_conn);
 			echo "<br>See who has checked out the books containing the keyword<br>";		
 	
-		echo "<table>";
-		echo "<tr><th>Name</th><th>MediaID</th><th>book title</th></tr>";
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>Name</th><th style='border:1px solid black'>MediaID</th><th style='border:1px solid black'>book title</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 			echo "<tr><td>" . $row["NAME"] . "</td><td>" .  $row["MEDIAID"] ."</td><td>"  .$row["BOOKTITLE"]."</td></tr>";
 		}
 		echo "</table>";
 		}
+		
+		
+		
+		}
+		
+		
+		
+		
+	if (array_key_exists('numBook', $_POST)) {
+		
+		
+		$variable1 = strtoupper($_POST['numBookString']);
+		
+		$stringMatch = $variable1;
+		
+		
+		$tuple = array (
+				":bind1" => $stringMatch,
+			);
+			$alltuples = array (
+				$tuple
+			);
+		
+		$SQLquery = "SELECT COUNT(B.mediaid) as MYCOUNT , B.bookTitle
+				    FROM  Book B
+					Where upper(B.bookTitle) like upper('${variable1}')
+					GROUP BY B.bookTitle";
+
+			
+			
+
+		
+		//$stid = oci_parse($conn, $SQLquery);
+		//$r = oci_execute($stid); 
+			
+		$result = executePlainSQL($SQLquery);
+		OCICommit($db_conn);
+			echo "<br>Number of books given title<br>";		
+	
+		echo "<table style='border:2px solid black'>";
+		echo "<tr><th style='border:1px solid black'>Title</th><th style='border:1px solid black'>Quantity</th></tr>";
+
+		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			echo "<tr><td>" . $row["BOOKTITLE"] . "</td><td>" .  $row["MYCOUNT"] ."</td></tr>";
+		}
+		echo "</table>";
+		}
+		
+		
+		
+		
+		
+
 		
 	if (array_key_exists('showEvent', $_POST)) {
 		
@@ -248,18 +299,6 @@ if ($db_conn){
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	   $r = oci_commit($db_conn);
 		if (!$r) {
 		$e = oci_error($db_conn);
@@ -268,10 +307,17 @@ if ($db_conn){
 			
 	   if ($_POST && $success) {
 		//POST-REDIRECT-GET -- See http://en.wikipedia.org/wiki/Post/Redirect/Get
-		header("location: testingPHP.php");
+		header("location: media_member.php");
 	} else {
 		// Select data...
 	//Commit to save changes...
+	
+	
+	
+	
+	
+	
+	
 	OCILogoff($db_conn);
 		}
 
@@ -288,7 +334,6 @@ if ($db_conn){
 //oci_close($db_conn);
 
 ?>
-
 
 
 
