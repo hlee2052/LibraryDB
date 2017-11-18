@@ -38,13 +38,7 @@ CREATE TABLE StaffEmployment (
   PRIMARY KEY(empId)
 );
 
-CREATE TABLE event (
-  eid  NUMBER(10)  not null,
-  startTime TIMESTAMP  null,
-  endTime TIMESTAMP  null,
-  ename VARCHAR(40)  null,
-  Primary Key(eid)
-  );
+
 
 CREATE TABLE Member(
    mid NUMBER(10) not null,
@@ -127,18 +121,18 @@ CREATE TABLE RoomLog(
 );
 
 
+CREATE TABLE event(
+  eid  NUMBER(10)  not null,
+  startTime TIMESTAMP not null,
+  endTime TIMESTAMP not null,
+  ename VARCHAR(40) not null,
+  roomNumber NUMBER(10) not null,
+  lid NUMBER(10) not null,
+  Primary Key(eid),
+  Foreign key(roomNumber, lid) references Room(roomNumber, lid) on delete cascade
+  );
+
 commit;
-
-
-
-
-
-insert into event(eid, startTime, endTime, ename) values (100, '2010-11-19 9.00', '2010-11-21 9.00', 'JK Rowling Autographs');
-insert into event(eid, startTime, endTime, ename) values (101, '2016-10-19 14.00', '2016-10-19 16.00', 'Free Yoga Lesson');
-insert into event(eid, startTime, endTime, ename) values (102, '2016-10-19 10.00', '2016-10-19 11.00', 'BasketWeaving');
-insert into event(eid, StartTime, endTime, ename) values (103, '2014-11-19 15.00',  '2014-11-19 19.00', 'Reading Talk');
-
-
 
 
 insert into Location(lid, locname, locaddress, locphone) values (1, 'Vancouver Branch', '1234 Van Street', 604134567);
@@ -153,26 +147,25 @@ insert into Room(roomNumber, lid) values (101, 2);
 insert into Room(roomNumber, lid) values (102, 2);
 insert into Room(roomNumber, lid) values (100, 3);
 
+insert into event(eid, startTime, endTime, ename, roomNumber, lid) values (100, '2010-11-19 9.00', '2010-11-21 9.00', 'JK Rowling Autographs', 100, 1);
+insert into event(eid, startTime, endTime, ename, roomNumber, lid) values (101, '2016-10-19 14.00', '2016-10-19 16.00', 'Free Yoga Lesson', 101, 1);
+insert into event(eid, startTime, endTime, ename, roomNumber, lid) values (102, '2016-10-19 10.00', '2016-10-19 11.00', 'BasketWeaving', 102, 2);
+insert into event(eid, StartTime, endTime, ename, roomNumber, lid) values (103, '2014-11-19 15.00',  '2014-11-19 19.00', 'Reading Talk', 100, 3);
 
 
 insert into eventLog(logid, eid, lid) values (100, 100, 1);
 insert into eventLog(logid, eid, lid) values (101, 101, 1);
 insert into eventLog(logid, eid, lid) values (102, 102, 1);
 insert into eventLog(logid, eid, lid) values (103, 103, 2);
+ 
+Insert Into Member (mid, fines, email, phone, name, address) values (101, 0, 'Ja@son.com', 12345, 'Jason', 'Street1 ave');
+Insert Into Member (mid, fines, email, phone, name, address) values (102, 123, 'Ca@rol.com', 43134134, 'Carol', 'Street2 ave');
+Insert Into Member (mid, fines, email, phone, name, address) values (103, 33, 'Ra@fael.com', 134134, 'Rafael','Street3 ave');
+Insert into Member (mid, fines, email, phone, name, address) values (104, 0, 'He@nry.com', 413143, 'Henry', 'Street4 ave');
 
-
-
-
-
-    
-Insert Into Member (mid, fines, email, phone, name, address) values (101, 0, 'Ja@son.com', 12345, 'Jason', '3333 ave');
-Insert Into Member (mid, fines, email, phone, name, address) values (102, 123, 'Ca@rol.com', 43134134, 'Carol', '3333 ave');
-Insert Into Member (mid, fines, email, phone, name, address) values (103, 33, 'Ra@fael.com', 134134, 'Rafael','3333 ave');
-Insert into Member (mid, fines, email, phone, name, address) values (104, 0, 'He@nry.com', 413143, 'Henry', '3333 ave');
-
-Insert into Member (mid, fines, email, phone, name, address) values (105, 123, 'cust1@com', 13414334,'generic1','3333 ave');
-Insert into Member (mid, fines, email, phone, name, address) values (106, 0, 'cust2@com', 134134,'generic2','3333 ave');
-Insert into Member (mid, fines, email, phone, name, address) values (107, 33, 'cust3@com',12412424, 'generic3','3333 ave');
+Insert into Member (mid, fines, email, phone, name, address) values (105, 123, 'cust1@com', 13414334,'member1','WestMall ave');
+Insert into Member (mid, fines, email, phone, name, address) values (106, 0, 'cust2@com', 134134,'member2','EastMall ave');
+Insert into Member (mid, fines, email, phone, name, address) values (107, 33, 'cust3@com',12412424, 'member3','NorthMall ave');
 
 
 
@@ -181,6 +174,13 @@ Insert Into Staff (mid, role) values (102, 'Librarian');
 Insert into Staff (mid, role) values (103, 'Custodian');
 Insert Into Staff (mid, role) values (104, 'Librarian');
 
+
+Insert Into StaffEmployment values(1, 101, 1);
+Insert Into StaffEmployment values(2, 101, 2);
+Insert Into StaffEmployment values(3, 101, 3);
+Insert Into StaffEmployment values (4, 102, 2);
+Insert Into StaffEmployment values(5, 103, 1);
+Insert Into StaffEmployment values(6, 104, 3);
 
 
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (101, '2008-11-19' , '2017-10-14', 'no', '2018-01-01', 'no', '3');
@@ -191,7 +191,7 @@ Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availab
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (106, '2016-06-19' , '2016-05-14', 'no', '2004-11-24', 'yes', '3');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (107, '2017-12-11' , '2017-10-14', 'yes', '2002-11-14', 'no', '3');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (108, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no', '1');
-
+Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (109, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no', '2');
 
 
 
@@ -206,6 +206,10 @@ Insert Into Book (mediaid, bISBN, bookTitle) values(105, 14444 ,'Fashion today')
 Insert Into Book (mediaid, bISBN, bookTitle) values(106, 34444 ,'Intro Computer');
 Insert Into Book (mediaid, bISBN, bookTitle) values(107, 231312, 'Building computer');
 Insert Into Book (mediaid, bISBN, bookTitle) values(108,233223, 'Harry Potter');
+Insert Into Book (mediaid, bISBN, bookTitle) values(109,233223, 'Harry Potter');
+
+
+
 
 Insert Into Orders (orderId, mid, mediaid) values (100, 101, 101);
 Insert Into Orders (orderId, mid, mediaid) values (101, 101, 107);
@@ -228,7 +232,6 @@ create view EquipmentCatalog(mediaid,equipname,reserved,availability,locname) as
 	from equipment E,media M,location L
 	where E.mediaid=M.mediaid and L.lid=M.lid;
 commit;
-
 
 
 

@@ -31,7 +31,7 @@
 
 <?php
 $success = True;
-$db_connection = OCILogon("ora_w3w9a", "a51875145", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_connection = OCILogon("ora_i4i8", "a68033083", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 
 function executePlainSQL($commandString){
   // function that executes SQL commands with bound variables
