@@ -36,6 +36,12 @@
           <input type="text" name="ename" placeholder="event name"></input>
           <input type="submit" value="insert" name="insertsubmit"></input>
         </form>
+
+        <h2> Cancel Event </h2>
+        <form method ="POST" action="event.php">
+          <input type="text" name="oldeid" placeholder="event ID"></input>
+          <input type="submit" value="cancel" name="deleteupdate"></input>
+        </form>
   </body>
 </html>
 
@@ -129,6 +135,14 @@ if ($db_connection){
       executeBoundSQL("insert into event values (:bind1, :bind2, :bind3, :bind4)", $alltuples);
       OCICommit($db_connection);
     }
+
+  if (array_key_exists ('deleteupdate', $_POST)){
+    $tuple = array (":bind1" => $_POST['oldeid']);
+    $alltuples = array ($tuple);
+    executeBoundSQL("delete from event where eid = :bind1", $alltuples);
+    OCICommit($db_connection);
+  }
+
   if ($_POST && $success) {
     header ("location: event.php");
   } else {
