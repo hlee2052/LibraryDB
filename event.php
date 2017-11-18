@@ -31,9 +31,11 @@
         <h2> Create New Event </h2>
         <form method ="POST" action="event.php">
           <input type="text" name="eid" placeholder="event ID"></input>
-          <input type="text" name="startTime" placeholder="start time of event"></input>
-          <input type="text" name="endTime" placeholder="end time of event"></input>
+          <input type="text" name="startTime" placeholder="YYYY-MM-DD 00.00"></input>
+          <input type="text" name="endTime" placeholder="YYYY-MM-DD 00.00"></input>
           <input type="text" name="ename" placeholder="event name"></input>
+          <input type="text" name="roomNumber" placeholder="room number"></input>
+          <input type="text" name="lid" placeholder="event location"></input>
           <input type="submit" value="insert" name="insertsubmit"></input>
         </form>
 
@@ -109,13 +111,17 @@ function printResult($result){
   <th style='border:1px solid black'>Start Time</th>
   <th style='border:1px solid black'>End Time</th>
   <th style='border:1px solid black'>Name</th>
+  <th style='border:1px solid black'>Room</th>
+  <th style='border:1px solid black'>Location</th>
   </tr>";
 
   while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
-    echo "<tr><td style='border:1px solid red'>" . $row["EID"] . "</td>
-    <td style='border:1px solid red'>" . $row["STARTTIME"] . "</td>
-    <td style='border:1px solid red'>" . $row["ENDTIME"] . "</td>
-    <td style='border:1px solid red'>" . $row["ENAME"] . "</td>
+    echo "<tr><td style='border:1px solid black'>" . $row["EID"] . "</td>
+    <td style='border:1px solid black'>" . $row["STARTTIME"] . "</td>
+    <td style='border:1px solid black'>" . $row["ENDTIME"] . "</td>
+    <td style='border:1px solid black'>" . $row["ENAME"] . "</td>
+    <td style='border:1px solid black'>" . $row["ROOMNUMBER"] . "</td>
+    <td style='border:1px solid black'>" . $row["LID"] . "</td>
     </tr>";
   }
   echo "</table>";
@@ -127,12 +133,14 @@ if ($db_connection){
         ":bind1" => $_POST['eid'],
         ":bind2" => $_POST['startTime'],
         ":bind3" => $_POST['endTime'],
-        ":bind4" => $_POST['ename']
+        ":bind4" => $_POST['ename'],
+        ":bind5" => $_POST['roomNumber'],
+        ":bind6" => $_POST['lid']
       );
       $alltuples = array (
         $tuple
       );
-      executeBoundSQL("insert into event values (:bind1, :bind2, :bind3, :bind4)", $alltuples);
+      executeBoundSQL("insert into event values (:bind1, :bind2, :bind3, :bind4, :bind5, :bind6)", $alltuples);
       OCICommit($db_connection);
     }
 
