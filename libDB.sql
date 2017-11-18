@@ -182,19 +182,7 @@ Insert into Staff (mid, role) values (103, 'Custodian');
 Insert Into Staff (mid, role) values (104, 'Librarian');
 
 
-Insert Into StaffEmployment values(1, 101, 1);
-Insert Into StaffEmployment values(2, 101, 2);
-Insert Into StaffEmployment values(3, 101, 3);
 
-Insert Into StaffEmployment values (4, 102, 2);
-Insert Into StaffEmployment values(5, 103, 1);
-Insert Into StaffEmployment values(6, 104, 3);
-
-
-
-
-
-<<<<<<< HEAD
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (101, '2008-11-19' , '2017-10-14', 'no', '2018-01-01', 'no', '3');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (102, '2011-02-19' , '2011-01-14', 'no', '1990-11-24', 'yes', '2');
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (103, '2011-03-19' , '2011-02-14', 'no', '2001-11-14', 'yes', '1');
@@ -205,20 +193,6 @@ Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availab
 Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (108, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no', '1');
 
 
-=======
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (101, '2008-11-19' , '2017-10-14', 'no', '2018-01-01', 'no');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (102, '2011-02-19' , '2011-01-14', 'no', '1990-11-24', 'yes');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (103, '2011-03-19' , '2011-02-14', 'no', '2001-11-14', 'yes');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (104, '2016-04-19' , '2016-03-14', 'no', '1999-11-10', 'yes');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (105, '2016-05-19' , '2016-04-14', 'no', '2011-11-14', 'yes');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (106, '2016-06-19' , '2016-05-14', 'no', '2004-11-24', 'yes');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (107, '2017-12-11' , '2017-10-14', 'yes', '2002-11-14', 'no');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (108, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (109, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (110, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (111, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability) values (112, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no');
->>>>>>> 68043ac652864752c6b22808f34f4bb5e9b70432
 
 
 
@@ -229,25 +203,14 @@ Insert Into DVD (mediaid, dISBN, dvdtitle) values(103, 124444 ,'planet earth dvd
 Insert Into DVD (mediaid, dISBN, dvdtitle) values(104, 514444 ,'rush hour3');
 
 Insert Into Book (mediaid, bISBN, bookTitle) values(105, 14444 ,'Fashion today');
-Insert Into Book (mediaid, bISBN, bookTitle) values(106, 3444 ,'Intro Computer');
-Insert Into Book (mediaid, bISBN, bookTitle) values(107, 2312, 'Building computer');
-Insert Into Book (mediaid, bISBN, bookTitle) values(108,23223, 'Harry Potter');
-Insert Into Book (mediaid, bISBN, bookTitle) values(109,2332, 'Harry Potter');
-Insert Into Book (mediaid, bISBN, bookTitle) values(110,2723, 'Harry Potter');
-Insert Into DVD (mediaid, dISBN, dvdTitle) values(111,2333, 'tester');
+Insert Into Book (mediaid, bISBN, bookTitle) values(106, 34444 ,'Intro Computer');
+Insert Into Book (mediaid, bISBN, bookTitle) values(107, 231312, 'Building computer');
+Insert Into Book (mediaid, bISBN, bookTitle) values(108,233223, 'Harry Potter');
 
-<<<<<<< HEAD
-=======
-
-commit;
-
-
->>>>>>> 68043ac652864752c6b22808f34f4bb5e9b70432
 Insert Into Orders (orderId, mid, mediaid) values (100, 101, 101);
 Insert Into Orders (orderId, mid, mediaid) values (101, 101, 107);
 Insert Into Orders (orderId, mid, mediaid) values (102, 105, 108);
 
-<<<<<<< HEAD
 create view BookCatalog(mediaid,booktitle,reserved,availability,locname) as
 	select B.mediaid,B.booktitle,M.reserved,M.availability,L.locname
 	from book B,media M,location L
@@ -267,8 +230,5 @@ create view EquipmentCatalog(mediaid,equipname,reserved,availability,locname) as
 commit;
 
 
-=======
-commit;
->>>>>>> 68043ac652864752c6b22808f34f4bb5e9b70432
 
 
