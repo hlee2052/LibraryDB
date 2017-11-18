@@ -22,29 +22,22 @@
   </style>
 
 <!--a div class set up for the database heading-->
-  <h1> Overdue media </h1>
+  <h1> Overdue Books </h1>
 
     <?php
     include "phpfunctions.php";
     function printResult($type, $result) { //prints results from a select statement
-      echo "<h2>" . $type . "</h2>";
     	echo "<table style='border:2px solid red'>";
     	echo "<tr>
       <th style='border:1px solid black'>ID</th>
       <th style='border:1px solid black'>Name</th>
       <th style='border:1px solid black'>Borrowed by</th>
-      <th style='border:1px solid black'>Borrow date</th>
-      <th style='border:1px solid black'>Days overdue</th>
-      <th style='border:1px solid black'>Reserved</th>
       </tr>";
     	while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
     		echo "<tr>
         <td style='border:1px solid red'>" . $row["MEDIAID"] . "</td>
         <td style='border:1px solid red'>" . $row["NAME"] . "</td>
-        <td style='border:1px solid red'>" . $row["MID"] . "</td>
-        <td style='border:1px solid red'>" . $row["BORROWDATE"] . "</td>
-        <td style='border:1px solid red'>" . $row["DAYSOVERDUE"] . "</td>
-        <td style='border:1px solid red'>" . $row["RESERVED"] . "</td>
+        <td style='border:1px solid red'>" . $row["MNAME"] . "</td>
         </tr>";
     	}
     	echo "</table>";
@@ -53,20 +46,11 @@
     // Connect Oracle...
     if ($db_conn) {
       //GET BOOKS
-      $booklist = executePlainSQL("SELECT MB.name as MID, O.mediaid as MEDIAID, B.bookTitle as NAME, B.borrowDate as BORROWDATE
+      $booklist = "SELECT MB.name as MName, O.mediaid, B.bookTitle as Name, M.borrowDate
         FROM Orders O, Book B, Media M, Member MB
-        WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid
-        AND
-        Mb.mid = O.mid
-        AND M.returnDate > ‘YYYY-MM-DD’"); //TODO: select mediaid, bookTitle, mid, borrowDate, Reserved,
-      //DAYSOVERDUE = today - returnDate. get all that have a DAYSOVERDUE more than 0
-    	printResult("Book", $booklist);
-      //GET DVDS
-      $dvdlist = executePlainSQL("select * from DVD");
-    	printResult("DVD", $dvdlist);
-      //GET EQUIPMENT
-      $equiplist = executePlainSQL("select * from Equipment");
-    	printResult("Equipment", $equiplist);
+        WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
+        AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
+    	printResult("Book", executePlainSQL($booklist));
     	//Commit to save changes...
     	OCILogoff($db_conn);
     } else {
