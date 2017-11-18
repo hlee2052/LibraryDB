@@ -12,6 +12,7 @@
       <!--can't get this to work for some reason... < ?php require 'menu.php';?>-->
       <a href="member.php">Home</a>
       <a href="media_member.php">Search media</a>
+	  <a href="mediacatalog.php">MediaCatalog</a>
       <a href="signin.php">Sign out</a>
     </div>
 
