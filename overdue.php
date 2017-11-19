@@ -51,13 +51,13 @@
     FROM Orders O, DVD D, Media M, Member MB
     WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
     AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
-    printResult("DVD", executePlainSQL($booklist));
+    printResult("DVD", executePlainSQL($dvdlist));
     //GET EQUIPMENT
-    $booklist = "SELECT MB.name as MName, O.mediaid, E.equipname as Name, M.borrowDate
+    $equiplist = "SELECT MB.name as MName, O.mediaid, E.equipname as Name, M.borrowDate
     FROM Orders O, Equipment E, Media M, Member MB
     WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
     AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
-    printResult("Equipment", executePlainSQL($booklist));
+    printResult("Equipment", executePlainSQL($equiplist));
     //Commit to save changes...
     OCILogoff($db_conn);
   } else {
