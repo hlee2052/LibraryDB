@@ -19,7 +19,7 @@
 
 <!--a div class set up for the database heading-->
     <div>
-      <h1> Member Home Page (D4) </h1>
+      <h1> Member Home Page </h1>
 	  
 	  <p> Type Member ID to see the borrowed media: </p>
 	  <form method="POST" action="member.php">

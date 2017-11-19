@@ -17,7 +17,7 @@
 
   <div>
     <h1> Media - Book page </h1>
-    <p>Search book with keyword (allows partial search, case insensitive):
+    <p>Search book with keyword to see who borrowed it (allows partial search, case insensitive):
     </p>
     <form method="POST" action="media_member.php">
       <p><input type="text" name="bookString" size="6">

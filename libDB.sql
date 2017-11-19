@@ -11,6 +11,7 @@ drop table DVD CASCADE CONSTRAINTS;
 drop table Equipment CASCADE CONSTRAINTS;
 drop table Room CASCADE CONSTRAINTS;
 drop table RoomLog CASCADE CONSTRAINTS;
+drop table Distributor cascade constraints;
 drop view BookCatalog CASCADE CONSTRAINTS;
 drop view DVDCatalog CASCADE CONSTRAINTS;
 drop view EquipmentCatalog CASCADE CONSTRAINTS;
@@ -38,15 +39,22 @@ CREATE TABLE StaffEmployment (
   PRIMARY KEY(empId)
 );
 
+CREATE TABLE Distributor (
+	dID  Number(10) not null,
+	distPhone Number(10) not null,
+	distName VARCHAR(10) not null,
+	distSpecialty VARCHAR(10) null,
+	PRIMARY KEY (dID)
+);
 
 
 CREATE TABLE Member(
    mid NUMBER(10) not null,
-   fines NUMBER(10) not null,
-   email varchar(20) not null,
-   phone NUMBER(10) not null,
-   name VARCHAR(20) not null,
-   address varchar(20) not null,
+   fines NUMBER(10)  null,
+   email varchar(20)  null,
+   phone NUMBER(10)  null,
+   name VARCHAR(20)  null,
+   address varchar(20)  null,
    PRIMARY KEY( mid )
 );
 
@@ -60,9 +68,9 @@ CREATE TABLE Staff(
 
 CREATE TABLE Location (
   lid NUMBER (10) not null,
-  locname varchar(40) not null,
-  locaddress varchar(40) not null,
-  locphone NUMBER(30) not null,
+  locname varchar(40)  null,
+  locaddress varchar(40)  null,
+  locphone NUMBER(30)  null,
   Primary Key(lid)
   );
   
@@ -70,9 +78,7 @@ CREATE TABLE Location (
   
 CREATE TABLE Media(
    mediaid NUMBER(10) not null,
-   returnDate Date not null,
    borrowDate Date not null,
-   reserved varchar(20) not null,
    dateAdded Date not null,
    availability varchar(20) not null,
    PRIMARY KEY( mediaid ),
@@ -183,15 +189,18 @@ Insert Into StaffEmployment values(5, 103, 1);
 Insert Into StaffEmployment values(6, 104, 3);
 
 
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (101, '2008-11-19' , '2017-10-14', 'no', '2018-01-01', 'no', '3');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (102, '2011-02-19' , '2011-01-14', 'no', '1990-11-24', 'yes', '2');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (103, '2011-03-19' , '2011-02-14', 'no', '2001-11-14', 'yes', '1');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (104, '2016-04-19' , '2016-03-14', 'no', '1999-11-10', 'yes', '2');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (105, '2016-05-19' , '2016-04-14', 'no', '2011-11-14', 'yes', '1');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (106, '2016-06-19' , '2016-05-14', 'no', '2004-11-24', 'yes', '3');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (107, '2017-12-11' , '2017-10-14', 'yes', '2002-11-14', 'no', '3');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (108, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no', '1');
-Insert Into Media (mediaid, returnDate, borrowDate, reserved, dateAdded, availability, lid) values (109, '2017-12-19' , '2017-10-10', 'yes', '2001-11-14', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (101, '2017-10-14',  '2018-01-01', 'no', '3');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (102, '2011-01-14',  '1990-11-24', 'yes', '2');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (103, '2011-02-14',  '2001-11-14', 'yes', '1');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (104, '2016-03-14',  '1999-11-10', 'yes', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (105, '2016-04-14',  '2011-11-14', 'yes', '1');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (106, '2016-05-14',  '2004-11-24', 'yes', '3');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (107, '2017-10-14',  '2002-11-14', 'no', '3');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (108, '2017-10-10',  '2001-11-14', 'no', '1');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (109, '2017-10-10',  '2001-11-14', 'no', '2');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (110, '2017-10-30',  '2001-11-14', 'no', '2');
+Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (111, '2017-10-10',  '2001-11-14', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (112, '2017-10-10',  '2001-11-14', 'no', '2');
 
 
 
@@ -205,30 +214,35 @@ Insert Into DVD (mediaid, dISBN, dvdtitle) values(104, 514444 ,'rush hour3');
 Insert Into Book (mediaid, bISBN, bookTitle) values(105, 14444 ,'Fashion today');
 Insert Into Book (mediaid, bISBN, bookTitle) values(106, 34444 ,'Intro Computer');
 Insert Into Book (mediaid, bISBN, bookTitle) values(107, 231312, 'Building computer');
-Insert Into Book (mediaid, bISBN, bookTitle) values(108,233223, 'Harry Potter');
-Insert Into Book (mediaid, bISBN, bookTitle) values(109,233223, 'Harry Potter');
-
+Insert Into Book (mediaid, bISBN, bookTitle) values(108,213223, 'Harry Potter');
+Insert Into Book (mediaid, bISBN, bookTitle) values(109,233213, 'Harry Potter');
+Insert Into Book (mediaid, bISBN, bookTitle) values(110,233423, 'computer and society');
+Insert Into Book (mediaid, bISBN, bookTitle) values(111,213221, 'Current Issues in Society');
+Insert Into Book (mediaid, bISBN, bookTitle) values(112,233213, 'computer system213');
 
 
 
 Insert Into Orders (orderId, mid, mediaid) values (100, 101, 101);
 Insert Into Orders (orderId, mid, mediaid) values (101, 101, 107);
 Insert Into Orders (orderId, mid, mediaid) values (102, 105, 108);
+Insert Into Orders (orderId, mid, mediaid) values (103, 102, 110);
+Insert Into Orders (orderId, mid, mediaid) values (104, 107, 111);
+Insert Into Orders (orderId, mid, mediaid) values (105, 103, 112);
 
-create view BookCatalog(mediaid,booktitle,reserved,availability,locname) as
-	select B.mediaid,B.booktitle,M.reserved,M.availability,L.locname
+create view BookCatalog(mediaid,booktitle,availability,locname) as
+	select B.mediaid,B.booktitle,M.availability,L.locname
 	from book B,media M,location L
 	where B.mediaid=M.mediaid and L.lid=M.lid;
 commit;
 
-create view DVDCatalog(mediaid,dvdtitle,reserved,availability,locname) as
-	select D.mediaid,D.dvdtitle,M.reserved,M.availability,L.locname
+create view DVDCatalog(mediaid,dvdtitle,availability,locname) as
+	select D.mediaid,D.dvdtitle,M.availability,L.locname
 	from DVD D,media M,location L
 	where D.mediaid=M.mediaid and L.lid=M.lid;
 commit;
 
-create view EquipmentCatalog(mediaid,equipname,reserved,availability,locname) as
-	select E.mediaid,E.equipname,M.reserved,M.availability,L.locname
+create view EquipmentCatalog(mediaid,equipname,availability,locname) as
+	select E.mediaid,E.equipname,M.availability,L.locname
 	from equipment E,media M,location L
 	where E.mediaid=M.mediaid and L.lid=M.lid;
 commit;
