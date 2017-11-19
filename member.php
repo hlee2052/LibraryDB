@@ -195,7 +195,7 @@ if ($db_conn){
 		trigger_error(htmlentities($e['message']), E_USER_ERROR);
 			}
 			
-		executeBoundSQL("UPDATE media Set reserved='False', availability='yes'
+		executeBoundSQL("UPDATE media Set availability='yes'
 		WHERE mediaid=:bind1", $alltuples);
 			
 			
