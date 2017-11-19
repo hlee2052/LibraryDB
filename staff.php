@@ -12,7 +12,7 @@
       <li><a class="active" href="staff.php">Home</a></li>
       <li><a href="overdue.php">Overdue</a></li>
       <li><a href="event.php">events</a></li>
-      <li><a href="signin.php">Sign out</a></li>
+      <li style="float:right"><a href="signin.php">Sign out</a></li>
     </ul>
 
 <!--a div class set up for the database heading-->
@@ -171,11 +171,11 @@ if ($db_conn){
 		OCICommit($db_conn);
 		echo "<br>List of Staff members wth fines to pay</br>";
 
-		echo "<table style='border:2px solid black'>";
-		echo "<tr><th style='border:1px solid black'>Name</th>
-			<th style='border:1px solid black'>member ID</th>
-			<th style='border:1px solid black'>Role</th>
-			<th style='border:1px solid black'>Fines</th></tr>";
+		echo "<table>";
+		echo "<tr><th>Name</th>
+			<th>Member ID</th>
+			<th>Role</th>
+			<th>Fines</th></tr>";
 
 		while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
 			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]."</td><td>$".$row["FINES"]. ".00</td></tr>";
@@ -244,10 +244,10 @@ if ($db_conn){
 		OCICommit($db_conn);
 		echo "<br>Employer that works at multiple loc<br>";
 
-		echo "<table style='border:2px solid black'>";
+		echo "<table>";
 
-				echo "<tr><th style='border:1px solid black'>Name</th>
-		<th style='border:1px solid black'>member ID</th>
+				echo "<tr><th>Name</th>
+		<th>Member ID</th>
 
 		</tr>";
 
@@ -279,11 +279,11 @@ if ($db_conn){
 		$memberList = executePlainSQL($allMembers);
 		echo "<br>List of Current Staff Members<br>";
 
-		echo "<table style='border:2px solid black'>";
-		echo "<tr><th style='border:1px solid black'>Name</th>
-		<th style='border:1px solid black'>member ID</th>
-		<th style='border:1px solid black'>Role</th>
-		<th style='border:1px solid black'>Fines</th></tr>";
+		echo "<table>";
+		echo "<tr><th>Name</th>
+		<th>Member ID</th>
+		<th>Role</th>
+		<th>Fines</th></tr>";
 
 		while ($row = OCI_Fetch_Array($memberList, OCI_BOTH)) {
 			echo "<tr><td>" . $row["NAME"] . "</td><td>".$row["MID"]."</td><td>".$row["ROLE"]."</td><td>".$row["FINES"]. "</td></tr>";
