@@ -46,6 +46,18 @@
     WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
     AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
     printResult("Book", executePlainSQL($booklist));
+    //GET DVDS
+    $dvdlist = "SELECT MB.name as MName, O.mediaid, B.dvdTitle as Name, M.borrowDate
+    FROM Orders O, DVD D, Media M, Member MB
+    WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
+    AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
+    printResult("DVD", executePlainSQL($booklist));
+    //GET EQUIPMENT
+    $booklist = "SELECT MB.name as MName, O.mediaid, E.equipname as Name, M.borrowDate
+    FROM Orders O, Equipment E, Media M, Member MB
+    WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
+    AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
+    printResult("Equipment", executePlainSQL($booklist));
     //Commit to save changes...
     OCILogoff($db_conn);
   } else {
