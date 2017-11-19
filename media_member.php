@@ -10,7 +10,7 @@
 <body>
   <ul>
     <li><a href="member.php">Home</a></li>
-    <li><a class="active" href="media_member.php">Search media</a></li>
+    <li><a class="active" href="media_member.php">Search Media</a></li>
     <li><a href="mediacatalog.php">Media Catalog</a></li>
     <li style="float:right"><a href="signin.php">Sign out</a></li>
   </ul>
