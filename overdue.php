@@ -22,7 +22,7 @@
   <?php
   include "phpfunctions.php";
   function printResult($type, $result) { //prints results from a select statement
-    echo "<table>";
+    echo "<h2>".$type."</h2><table>";
     echo "<tr>
     <th>".$type." ID</th>
     <th>Name</th>
