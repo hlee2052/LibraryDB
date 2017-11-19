@@ -17,7 +17,7 @@
 
 
   <!--a div class set up for the database heading-->
-  <h1> Overdue Books </h1>
+  <h1> Overdue Media </h1>
 
   <?php
   include "phpfunctions.php";
