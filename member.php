@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title> Library Database </title>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-  </head>
-
+<head>
+  <title> Library Database </title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
 
   <body>
-    <div class="menu">
-      <!--can't get this to work for some reason... < ?php require 'menu.php';?>-->
-      <a href="member.php">Home</a>
-      <a href="media_member.php">Search media</a>
-	  <a href="mediacatalog.php">MediaCatalog</a>
-      <a href="signin.php">Sign out</a>
-    </div>
-
+  <ul>
+    <li><a class="active" href="member.php">Home</a></li>
+    <li><a href="media_member.php">Search media</a></li>
+    <li><a href="mediacatalog.php">Media Catalog</a></li>
+    <li style="float:right"><a href="signin.php">Sign out</a></li>
+  </ul>
 
   <!--setting the background color-->
-  <style>
-    body { background-color: Ivory }
-  </style>
+
 
 <!--a div class set up for the database heading-->
     <div>
