@@ -3,20 +3,14 @@
 
   <head>
     <title> Library Database </title>
-    <link rel="stylesheet" type="text/css" href="style.php"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
 
 
-  <body>
+  <body align="center">
 
-  <!--setting the background color-->
-  <style>
-    body { background-color: Ivory }
-  </style>
-
-<!--a div class set up for the database heading-->
-    <div class="title_db" align="center">
-      <h1> Sign In </h1>
+  <h1> Welcome to the Library database (Team 12)</h1>
+  <br><br>
 
     <?php
     include "phpfunctions.php";
@@ -31,7 +25,8 @@
         echo "<option>" . $row["MID"] . $row["NAME"] . "</option>";
       }
 
-      echo '</select>
+      echo
+      '</select>
           <input type="submit" value="Sign in as ' . $type . '" name="' . $type . '"></input>
         </form>
       </div>';
@@ -43,7 +38,7 @@
       $stafflist = "SELECT M.name as NAME, M.mid as ID
         FROM Staff S, Member M
         WHERE S.mid = M.mid";
-      printResult("Staff", executePlainSQL($stafflist));
+      printResult("staff", executePlainSQL($stafflist));
       $getNextID = "SELECT MAX(mid) as mid FROM Member";
       $max = executePlainSQL($getNextID);
       while ($temp = OCI_Fetch_Array($max, OCI_BOTH)) {
@@ -68,7 +63,7 @@
       	} else {
           //Member
           $memberlist = "SELECT name as NAME, mid as ID FROM Member M";
-          printResult("Member", executePlainSQL($memberlist));
+          printResult("member", executePlainSQL($memberlist));
       	}
     	//Commit to save changes...
     	OCILogoff($db_conn);
@@ -78,16 +73,15 @@
     	echo htmlentities($e['message']);
     }
     ?>
-    </div>
-
     <div class="new">
+      <br><br>
       <h2> Sign up </h2>
       <form action="signin.php" method="post">
-        <input type="text" name="name" placeholder="First name, Last name"></input>
-        <input type="text" name="phone" placeholder="phone"></input>
-        <input type="text" name="email" placeholder="email"></input>
-        <input type="text" name="address" placeholder="address"></input>
-        <input type="submit" value="Sign up" name="new"></input>
+        Name<br> <input type="text" name="name" placeholder="name"></input>
+        <br>Phone<br> <input type="text" name="phone" placeholder="phone"></input>
+        <br>Email<br> <input type="text" name="email" placeholder="email"></input>
+        <br>Address<br> <input type="text" name="address" placeholder="address"></input>
+        <br><input type="submit" value="Sign up" name="new"></input>
       </form>
     </div>
   </body>

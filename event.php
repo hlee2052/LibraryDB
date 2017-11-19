@@ -9,8 +9,6 @@
 
   <body>
     <div class="menu">
-      <!--can't get this to work for some reason... < ?php require 'menu.php';?>-->
-      <a href="menu.php">Menu</a>
       <a href="member.php">Member Page</a>
       <a href="media_member.php">Search Media</a>
     </div>
@@ -48,66 +46,13 @@
 </html>
 
 <?php
-$success = True;
-$db_connection = OCILogon("ora_n4s0b", "a18623124", "dbhost.ugrad.cs.ubc.ca:1522/ug");
-
-function executePlainSQL($commandString){
-  // function that executes SQL commands with bound variables
-  global $db_connection, $success;
-  $statement = OCIParse($db_connection, $commandString);
-
-  if (!$statement){
-    echo "<br>Cannot parse the following command: " . $commandString . "<br>";
-    $error = OCI_Error($db_connection);
-    echo htmlentities($error['message']);
-    $success = False;
-  }
-
-  $exec = OCIExecute($statement, OCI_DEFAULT);
-  if (!$exec){
-    echo "<br>Cannot execute the following command for EPSQL: " . $commandString . "<br>";
-    $error = OCI_Error($statement);
-    echo htmlentities($error['message']);
-    $success = false;
-  } else {
-
-  }
-  return $statement;
-}
-
-function executeBoundSQL($commandString, $list){
-  global $db_connection, $success;
-  $statement = OCIParse($db_connection, $commandString);
-// parse SQL command
-  if (!$statement){
-    echo "<br> Cannot parse the following command: " . $commandString . "<br>";
-    $error = OCI_Error($db_connection);
-    echo htmlentities($error['message']);
-    $success = False;
-  }
-
-  foreach ($list as $tuple) {
-    foreach ($tuple as $bind => $val){
-      OCIBindByName($statement, $bind, $val);
-      unset($val);
-    }
-    $exec = OCIExecute($statement, OCI_NO_AUTO_COMMIT);
-    //executes SQL command
-    if (!$exec) {
-      echo "<br>Cannot execute the following command for EBSQL: " . $commandString . "<br>";
-      $error = OCI_Error($statement);
-      echo htmlentities ($error['message']);
-      echo "<br>";
-      $success = False;
-    }
-  }
-}
+include "phpfunctions.php";
 
 function printResult($result){
   echo "<br><h2>List of Events</h2><br>";
 	echo "<table style='border:2px solid black'>";
 	echo "<tr>
-<th style='border:1px solid black'>Event ID</th>
+  <th style='border:1px solid black'>Event ID</th>
   <th style='border:1px solid black'>Start Time</th>
   <th style='border:1px solid black'>End Time</th>
   <th style='border:1px solid black'>Name</th>

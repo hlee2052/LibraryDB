@@ -1,6 +1,56 @@
-.title_db{
-  font-size: 32pt;
-  color: black;
+body {
+  background-color: Ivory;
+  align-content: center;
   font-weight: bold;
   font-family: "Georgia", Times, serif;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #153c7c;
+}
+
+.active {
+    background-color: #3666b5;
+}
+
+input[type=text], select {
+    width: 25%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit], button {
+    background-color: #153c7c;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+}
+
+input[type=submit]:hover, button:hover {
+    background-color: #3666b5;
 }
