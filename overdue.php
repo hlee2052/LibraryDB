@@ -24,7 +24,7 @@
   function printResult($type, $result) { //prints results from a select statement
     echo "<table>";
     echo "<tr>
-    <th>Book ID</th>
+    <th>".$type." ID</th>
     <th>Name</th>
     <th>Borrowed by</th>
     </tr>";
