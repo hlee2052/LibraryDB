@@ -27,7 +27,6 @@
     echo "<tr>
     <th>Media Id</th>
     <th>Name</th>
-    <th>Reserved</th>
     <th>Availability</th>
     <th>Location</th>
     </tr>";
@@ -35,7 +34,6 @@
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
       echo "<tr><td>" . $row["MEDIAID"] . "</td>
       <td>" . $row["BOOKTITLE"] . "</td>
-      <td>" . $row["RESERVED"] . "</td>
       <td>" . $row["AVAILABILITY"] . "</td>
       <td>" . $row["LOCNAME"] . "</td>
       </tr>";
@@ -49,7 +47,6 @@
     echo "<tr>
     <th>Media Id</th>
     <th>DVD Title</th>
-    <th>Reserved</th>
     <th>Availability</th>
     <th>Location</th>
     </tr>";
@@ -57,7 +54,6 @@
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
       echo "<tr><td>" . $row["MEDIAID"] . "</td>
       <td>" . $row["DVDTITLE"] . "</td>
-      <td>" . $row["RESERVED"] . "</td>
       <td>" . $row["AVAILABILITY"] . "</td>
       <td>" . $row["LOCNAME"] . "</td>
       </tr>";
@@ -70,7 +66,6 @@
     <table><tr>
     <th>Media Id</th>
     <th>Equipment Name</th>
-    <th>Reserved</th>
     <th>Availability</th>
     <th>Location</th>
     </tr>";
@@ -78,7 +73,6 @@
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)){
       echo "<tr><td>" . $row["MEDIAID"] . "</td>
       <td>" . $row["EQUIPNAME"] . "</td>
-      <td>" . $row["RESERVED"] . "</td>
       <td>" . $row["AVAILABILITY"] . "</td>
       <td>" . $row["LOCNAME"] . "</td>
       </tr>";
