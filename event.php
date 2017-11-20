@@ -44,7 +44,7 @@
 
 <?php
 $success = True;
-$db_connection = OCILogon("ora_n4s0b", "a18623124", "dbhost.ugrad.cs.ubc.ca:1522/ug");
+$db_connection = OCILogon("ora_i4i8", "a68033083", "dbhost.ugrad.cs.ubc.ca:1522/ug");
 function executePlainSQL($commandString){
   // function that executes SQL commands with bound variables
   global $db_connection, $success;
