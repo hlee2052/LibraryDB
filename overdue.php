@@ -17,14 +17,14 @@
 
 
   <!--a div class set up for the database heading-->
-  <h1> Overdue Books </h1>
+  <h1> Overdue Media </h1>
 
   <?php
   include "phpfunctions.php";
   function printResult($type, $result) { //prints results from a select statement
-    echo "<table>";
+    echo "<h2>".$type."</h2><table>";
     echo "<tr>
-    <th>Book ID</th>
+    <th>".$type." ID</th>
     <th>Name</th>
     <th>Borrowed by</th>
     </tr>";
@@ -46,6 +46,18 @@
     WHERE O.mediaid = B.mediaid AND B.mediaid = M.mediaid AND Mb.mid = O.mid
     AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
     printResult("Book", executePlainSQL($booklist));
+    //GET DVDS
+    $dvdlist = "SELECT MB.name as MName, O.mediaid, D.dvdTitle as Name, M.borrowDate
+    FROM Orders O, DVD D, Media M, Member MB
+    WHERE O.mediaid = D.mediaid AND D.mediaid = M.mediaid AND Mb.mid = O.mid
+    AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
+    printResult("DVD", executePlainSQL($dvdlist));
+    //GET EQUIPMENT
+    $equiplist = "SELECT MB.name as MName, O.mediaid, E.equipname as Name, M.borrowDate
+    FROM Orders O, Equipment E, Media M, Member MB
+    WHERE O.mediaid = E.mediaid AND E.mediaid = M.mediaid AND Mb.mid = O.mid
+    AND M.availability = 'no' AND (M.borrowDate + 36) < SYSDATE";
+    printResult("Equipment", executePlainSQL($equiplist));
     //Commit to save changes...
     OCILogoff($db_conn);
   } else {

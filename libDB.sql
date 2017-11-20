@@ -164,6 +164,8 @@ insert into eventLog(logid, eid, lid) values (101, 101, 1);
 insert into eventLog(logid, eid, lid) values (102, 102, 1);
 insert into eventLog(logid, eid, lid) values (103, 103, 2);
  
+ 
+Insert into Member (mid, fines, email, phone, name, address) values (100, 33, 'cust3@com',12412424, 'John','NorthMall2 ave');
 Insert Into Member (mid, fines, email, phone, name, address) values (101, 0, 'Ja@son.com', 12345, 'Jason', 'Street1 ave');
 Insert Into Member (mid, fines, email, phone, name, address) values (102, 123, 'Ca@rol.com', 43134134, 'Carol', 'Street2 ave');
 Insert Into Member (mid, fines, email, phone, name, address) values (103, 33, 'Ra@fael.com', 134134, 'Rafael','Street3 ave');
@@ -175,6 +177,8 @@ Insert into Member (mid, fines, email, phone, name, address) values (107, 33, 'c
 
 
 
+
+Insert Into Staff (mid, role) values (100, 'Custodian');
 Insert Into Staff (mid, role) values (101, 'Security');
 Insert Into Staff (mid, role) values (102, 'Librarian');
 Insert into Staff (mid, role) values (103, 'Custodian');
@@ -200,16 +204,52 @@ Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (1
 Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (109, '2017-10-10',  '2001-11-14', 'no', '2');
 Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (110, '2017-10-30',  '2001-11-14', 'no', '2');
 Insert Into Media (mediaid , borrowDate , dateAdded, availability, lid) values (111, '2017-10-10',  '2001-11-14', 'no', '2');
-Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (112, '2017-10-10',  '2001-11-14', 'no', '2');
+
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (112, '2017-10-10',  '2001-11-14', 'yes', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (113, '2017-10-10',  '2001-11-14', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (114, '2017-10-10',  '2001-11-14', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (115, '2017-10-10',  '2001-11-14', 'no', '2');
+
+
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (201, '2017-9-01',  '2016-02-01', 'no', '1');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (202, '2017-9-17',  '2016-05-12', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (203, '2017-9-18',  '2016-03-10', 'no', '3');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (250, '2017-09-15',  '2016-04-24', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (251, '2017-08-13',  '2016-07-12', 'no', '2');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (252, '2017-10-14',  '2016-01-09', 'yes', '1');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (220, '2017-10-16',  '2016-06-04', 'no', '1');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (221, '2017-10-11',  '2016-08-08', 'no', '3');
+Insert Into Media (mediaid , borrowDate, dateAdded, availability, lid) values (222, '2017-10-14',  '2016-09-02', 'yes', '1');
+
+
+
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(201, 587634 ,'Frida');
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(202, 439852 ,'The Exorcist');
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(203, 920756 ,'Titanic');
+Insert Into Equipment (mediaid, equipname, type) values(250, 'DVD Player' ,'media player');
+Insert Into Equipment (mediaid, equipname, type) values(251, 'SONY PXW-Z90V 4K' ,'camcorder');
+Insert Into Equipment (mediaid, equipname, type) values(252, 'Audio-Technica AT2020' ,'microphone');
+Insert Into Book (mediaid, bISBN, bookTitle) values(220,597346, 'The Shining');
+Insert Into Book (mediaid, bISBN, bookTitle) values(221,387591, 'It');
+Insert Into Book (mediaid, bISBN, bookTitle) values(222,687519, 'Carrie');
+
+
+
+
 
 
 
 
 Insert Into Equipment (mediaid, equipname, type) values(101, 'Laptop1', 'computer');
 Insert Into Equipment (mediaid, equipname, type) values(102, 'Laptop3' ,'computer');
+Insert Into Equipment (mediaid, equipname, type) values(112, 'projector1' ,'projetor');
+Insert Into Equipment (mediaid, equipname, type) values(113, 'projector2' ,'projector');
 
-Insert Into DVD (mediaid, dISBN, dvdtitle) values(103, 124444 ,'planet earth dvd');
-Insert Into DVD (mediaid, dISBN, dvdtitle) values(104, 514444 ,'rush hour3');
+
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(103, 124444 ,'Planet earth DVD');
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(104, 514444 ,'Rush hour3');
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(114, 514444 ,'Harry Potter and Philosophers Hat');
+Insert Into DVD (mediaid, dISBN, dvdtitle) values(115, 514444 ,'The Planet of Apes');
 
 Insert Into Book (mediaid, bISBN, bookTitle) values(105, 14444 ,'Fashion today');
 Insert Into Book (mediaid, bISBN, bookTitle) values(106, 34444 ,'Intro Computer');
@@ -222,12 +262,23 @@ Insert Into Book (mediaid, bISBN, bookTitle) values(112,233213, 'computer system
 
 
 
+
 Insert Into Orders (orderId, mid, mediaid) values (100, 101, 101);
 Insert Into Orders (orderId, mid, mediaid) values (101, 101, 107);
 Insert Into Orders (orderId, mid, mediaid) values (102, 105, 108);
 Insert Into Orders (orderId, mid, mediaid) values (103, 102, 110);
 Insert Into Orders (orderId, mid, mediaid) values (104, 107, 111);
 Insert Into Orders (orderId, mid, mediaid) values (105, 103, 112);
+
+Insert Into Orders (orderId, mid, mediaid) values (106, 103, 201);
+Insert Into Orders (orderId, mid, mediaid) values (107, 107, 250);
+Insert Into Orders (orderId, mid, mediaid) values (108, 106, 251);
+Insert Into Orders (orderId, mid, mediaid) values (109, 102, 201);
+Insert Into Orders (orderId, mid, mediaid) values (110, 101, 202);
+Insert Into Orders (orderId, mid, mediaid) values (111, 104, 203);
+
+
+
 
 create view BookCatalog(mediaid,booktitle,availability,locname) as
 	select B.mediaid,B.booktitle,M.availability,L.locname

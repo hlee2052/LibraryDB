@@ -80,6 +80,7 @@
     echo "</table>";
   }
   
+  
   if ($db_conn){
     if ($_POST && $success) {
       header ("location: mediacatalog.php");
